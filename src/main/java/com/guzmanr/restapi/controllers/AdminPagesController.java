@@ -3,10 +3,8 @@ package com.guzmanr.restapi.controllers;
 import com.guzmanr.restapi.models.PageRepository;
 import com.guzmanr.restapi.models.data.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +21,11 @@ public class AdminPagesController {
 
         List<Page> pages = repository.findAllByOrderBySortingAsc();
         return pages;
+    }
+
+    @PostMapping(path = "/add", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Page add(@RequestBody Page page) {
+        return repository.save(page);
     }
 }
