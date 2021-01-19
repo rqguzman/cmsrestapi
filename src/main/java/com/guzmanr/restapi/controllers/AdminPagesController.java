@@ -3,6 +3,7 @@ package com.guzmanr.restapi.controllers;
 import com.guzmanr.restapi.models.PageRepository;
 import com.guzmanr.restapi.models.data.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,14 @@ public class AdminPagesController {
         return repository.save(page);
     }
 
+    @DeleteMapping(path = "/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id){
 
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+        }
+
+    }
 }
